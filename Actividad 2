@@ -1,0 +1,29 @@
+/******************************************************************************
+Autor: Isabel de Jesus Castro
+Actividad 2. Crear una app que sume, reste, multiplique y divida sus valores entero o decimales.
+
+*******************************************************************************/
+
+#include <iostream> //Biblioteca standar de entrada y salida std::cin y std::cout
+
+int main() {
+	float numero1, numero2; //Declaramos variable (numerico decimales), numero1 y numero2
+
+	std::cout <<"Escribe el primer número: "; //Se solicita el 1er número
+	std::cin >> numero1; //Escribe 1er número
+
+	std::cout <<"Escribe el segundo número: "; // Se solicita el 2do número
+	std::cin >> numero2; //Escribe 2do número
+
+	float suma = numero1 + numero2; //Se realiza la suma del número 1 mas el número 2
+	float resta = numero1 - numero2; // Se realiza la resta del número 1 y el número 2
+	float multiplicacion = numero1 * numero2; //Se realiza la multiplicación del número 1 y el número 2
+	float división = numero1 / numero2; // Se realiza la división del número 1 y el múmero 2
+
+	std:: cout << "La suma es: " << suma << std::endl; //Muestra la leyenda La suma es: con el resultado de suma
+	std:: cout << "La resta es: " << resta << std::endl; //Muestra la leyenda La resta es: con el resultado de la resta
+	std:: cout << "La multiplicación es: " << multiplicacion << std::endl; //Muestra la Leyenda La multiplicacion es: con el resultado de la misma
+	std:: cout << "La división es: " << division << std:: endl; //Muestra la leyenda La división es: con el resultado de la división
+
+	return 0; //Finaliza el programa
+}
