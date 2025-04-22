@@ -1,0 +1,111 @@
+#include <iostream>// Biblioteca para entrada y salidas en C++
+#include <string>// Biblioteca para manipulacion de cadenas (std::string)
+#include <cctype> // Biblioteca para funciones de caracteres (std::toupper)
+#include <algorithm> // Biblioteca para std::remove_if
+
+// Función para verificar si una cadena contiene caracteres no alfabéticos
+bool ContieneCaracterNoAlfabetico(const std::string& str) {
+    return std::any_of(str.begin(), str.end(), [](unsigned char c){ return !std::isalpha(c); });
+}
+
+// Funcion para obtener la primera vocal interna del apellido paterno
+char ObtenerPrimeraVocalInterna(const std::string& str) {
+    std::string validStr = str;
+    std::transform(validStr.begin(), validStr.end(), validStr.begin(), ::toupper);
+    // Recorremos la cadena desde el segundo caracter (indice 1) hasta el final
+    for (size_t i = 1; i < validStr.length(); ++i) {
+        char c = validStr[i]; // Se obtiene el caracter actual de la cadena
+
+        // Se verifica si el caracter es una vocal mayúscula
+        if (c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U')
+            return c; // Regresa la primera vocal encontrada
+    }
+    return 'X'; // Si no se encuentra ninguna vocal interna, se devuelve una X
+}
+
+// Funcion para calcular el RFC con base a los datos personales
+std::string calcularRFC(std::string Nombre, std::string ApellidoPaterno,
+                        std::string ApellidoMaterno, std::string FechaNacimiento) {
+    std::string RFC = "";
+
+    // Reemplazar palabras mal formadas con "X"
+    if (ContieneCaracterNoAlfabetico(Nombre)) {
+        Nombre = "X";
+    }
+    if (ContieneCaracterNoAlfabetico(ApellidoPaterno)) {
+        ApellidoPaterno = "X";
+    }
+    if (!ApellidoMaterno.empty() && ContieneCaracterNoAlfabetico(ApellidoMaterno)) {
+        ApellidoMaterno = "X";
+    }
+
+    // Validar el formato de la fecha de nacimiento (DD-MM-YYYY)
+    if (FechaNacimiento.length() != 10 || FechaNacimiento[2] != '-' || FechaNacimiento[5] != '-') {
+        std::cerr << "Error: Formato de fecha de nacimiento incorrecto (DD-MM-YYYY)." << std::endl;
+        return "XXXXXXXXXXXXX"; // Retorna una cadena de 'X' indicando error
+    }
+    for (int i = 0; i < 10; ++i) {
+        if (i != 2 && i != 5 && !std::isdigit(FechaNacimiento[i])) {
+            std::cerr << "Error: Formato de fecha de nacimiento incorrecto (DD-MM-YYYY)." << std::endl;
+            return "XXXXXXXXXXXXX"; // Retorna una cadena de 'X' indicando error
+        }
+    }
+
+    // Se obtiene la letra inicial y la primera vocal interna del apellido paterno
+    char LetraInicial = std::toupper(ApellidoPaterno[0]);
+    char PrimeraVocalInterna = ObtenerPrimeraVocalInterna(ApellidoPaterno);
+
+    // Se obtiene la inicial del apellido materno o se usa una 'X' si no hay
+    char InicialApellidoMaterno = (!ApellidoMaterno.empty()) ? std::toupper(ApellidoMaterno[0]) : 'X';
+
+    // Se obtiene la inicial del primer nombre o se usa una 'X' si no hay
+    char InicialNombre = std::toupper(Nombre[0]);
+
+    // Se obtiene los 2 ultimos digitos del año de nacimiento
+    std::string Anio = FechaNacimiento.substr(8, 2); // Corrección: El año está al final en DD-MM-YYYY
+
+    // Se obtiene el mes de nacimiento
+    std::string Mes = FechaNacimiento.substr(3, 2); // Corrección: El mes está en la posición 3 y 4
+
+    // Se obtiene el dia de nacimiento (posiciones 0 y 1)
+    std::string Dia = FechaNacimiento.substr(0, 2); // Corrección: El día está al principio
+
+    // Se construye el RFC
+    RFC += LetraInicial;
+    RFC += PrimeraVocalInterna;
+    RFC += InicialApellidoMaterno;
+    RFC += InicialNombre;
+    RFC += Anio;
+    RFC += Mes;
+    RFC += Dia;
+
+    return RFC;
+}
+
+int main() {
+    std::string Nombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento;
+
+    // Solicita el nombre del usuario
+    std::cout << "Ingrese el Nombre: ";
+    std::getline(std::cin, Nombre);
+
+    // Solicita el apellido paterno
+    std::cout << "Ingrese el Apellido Paterno: ";
+    std::getline(std::cin, ApellidoPaterno);
+
+    // Solicita el apellido materno permitiendo que el usuario deje vacio
+    std::cout << "Ingrese el Apellido Materno (si no tiene, presione Enter): ";
+    std::getline(std::cin, ApellidoMaterno);
+
+    // Solicita la fecha de nacimiento en formato DD-MM-YYYY
+    std::cout << "Ingrese la Fecha de Nacimiento (DD-MM-YYYY): ";
+    std::getline(std::cin, FechaNacimiento);
+
+    // Se muestra el RFC utilizando la funcion calcularRFC
+    std::string RFC = calcularRFC(Nombre, ApellidoPaterno, ApellidoMaterno, FechaNacimiento);
+
+    // Se muestra el RFC generado
+    std::cout << "RFC: " << RFC << std::endl;
+
+    return 0; // Finaliza el programa
+}
