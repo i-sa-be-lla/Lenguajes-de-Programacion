@@ -1,0 +1,101 @@
+create database TCoppel
+use TCoppel
+create table Puesto(
+IdPuesto int IDENTITY(1,1) primary key,
+NombrePuesto nvarchar(50),
+DescripcionPuesto nvarchar (100)
+);
+
+create table CentroTrabajo(
+IdSucursal nvarchar (10) primary key,
+NombreSucursal nvarchar(50),
+Ciudad nvarchar (100)
+);
+
+create table Empleado (
+NoEmpleado int IDENTITY(1,1) primary key,
+Nombre nvarchar(50),
+ApellidoPaterno nvarchar (100),
+ApellidoMaterno nvarchar (100),
+FechaNacimiento date,
+RFC AS (UPPER(LEFT(ApellidoPaterno, 2) + LEFT(ApellidoMaterno, 1) + LEFT(Nombre, 1) + 
+RIGHT(CONVERT(VARCHAR(10), FechaNacimiento, 112), 6)
+)
+) PERSISTED, 
+CentroTrabajo NVARCHAR (10),
+Puesto int,
+DescripcionPuesto nvarchar (150),
+Directivo BIT default 0
+
+CONSTRAINT FK_Empleado_CentroTrabajo FOREIGN KEY (CentroTrabajo) REFERENCES CentroTrabajo(IdSucursal),
+CONSTRAINT FK_Empleado_Puesto FOREIGN KEY (Puesto) REFERENCES Puesto(IdPuesto),
+);
+
+create table Directivo(
+NoEmpleado int primary key,
+NoSucursalSupervisa NVARCHAR (10),
+PCombustible bit,
+
+CONSTRAINT FK_Directivo_Empleado FOREIGN KEY (NoEmpleado) REFERENCES Empleado(NoEmpleado),
+CONSTRAINT FK_Directivo_Centro FOREIGN KEY (NoSucursalSupervisa) REFERENCES CentroTrabajo(IdSucursal),
+);
+
+use TCoppel
+
+insert into Puesto(NombrePuesto, DescripcionPuesto)
+VALUES ('Gerente', 'Encargado de Sucursal'),
+		('SubGerente', 'SubEncargado de Sucursal'),
+		('Promotor', 'Venta de productos Bancarios'),
+		('Cajera Principal', 'Encargado de Ventanilla'),
+		('Cajera Mixta', 'Manejo de efectivo Bancoppel'),
+		('Cajero de abonos', 'Manejo de efectivo Coppel');
+
+
+delete from Puesto
+WHERE IdPuesto = (SELECT MIN (IdPuesto) From Puesto);
+
+
+insert into CentroTrabajo(IdSucursal, NombreSucursal, Ciudad)
+values ('000201', 'Tienda Angel Flores Ropa', 'Culiacan'),
+		('000202', 'Tienda Angel Flores Muebles', 'Culiacan'),
+		('000203', 'Tienda Angel Flores Cajas', 'Culiacan'),
+		('049001', 'La Primavera Ropa', 'Culiacan'),
+		('049002', 'La Primavera Muebles', 'Culiacan'),
+		('049003', 'La Primavera Cajas', 'Culiacan');
+		
+
+delete from CentroTrabajo
+WHERE IdSucursal = (SELECT MIN (IdSucursal) From CentroTrabajo);
+
+
+insert into Empleado(Nombre, ApellidoMaterno, ApellidoPaterno, FechaNacimiento, CentroTrabajo, Puesto, DescripcionPuesto, Directivo)
+values 	('Alberto', 'Medina', 'Angulo', '1980-06-15', '000201', 1, 'Encargado de Sucursal', 1),
+		('Eduardo', 'Zarate', 'Dircio', '2000-05-07', '049003', 2, 'Subencargado de Sucursal', 1),
+		('Isabel', 'De Jesus', 'Castro', '1984-09-01', '000202', 3, 'Venta de Productos Bancarios', 0),
+		('Nidya', 'Flores', 'Azucena', '1981-02-18', '000203', 4, 'Encargado de Ventanilla', 0),
+		('Bianca', 'Alvarez', 'Arrieta', '1990-01-11', '049001', 5, 'Manejo de efectivo Bamcoppel', 0),
+		('Zhenia', 'Alcantara', 'Arce', '1983-09-10', '049002', 6, 'Manejo de efectivo Coppel', 0);
+		
+	
+delete from Empleado
+WHERE NoEmpleado = (SELECT MIN (NoEmpleado from Empleado);
+
+
+insert into Directivo(NoEmpleado, NoSucursalSupervisa, PCombustible)
+VALUES (2, '000201', 1),
+		(3, '049003', 1),
+		(4, '000202', 0),
+		(5, '000203', 0),
+		(6, '049001', 0),
+		(7, '049002', 0);
+		
+
+	
+delete from CentroTrabajo
+WHERE IdSucursal = (SELECT MIN (IdSucursal) From CentroTrabajo);
+
+use TCoppel
+
+SELECT NoEmpleado, Nombre + ApellidoMaterno + ApellidoPaterno AS NombreCompleto, 
+FechaNacimiento, RFC, CentroTrabajo, DescripcionPuesto, Directivo 
+FROM Empleado;
