@@ -1,0 +1,9 @@
+// Autor: Isabel de Jesus
+#include <iostream>
+
+int main()
+{
+    std::cout << "Debut y despedida";
+    std::cin.get();
+    return 0;
+}
