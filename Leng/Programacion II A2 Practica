@@ -7,3 +7,19 @@ int main()
     std::cin.get();
     return 0;
 }
+
+conexion base de datos SQL Server en Visual studio
+
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <configSections>
+    </configSections>
+    <connectionStrings>
+        <add name="TCopel.Properties.Settings.TCoppelConnectionString"
+            connectionString="Data Source=DESKTOP-CB383MQ\SQLEXPRESS01;Initial Catalog=TCoppel;Integrated Security=True;TrustServerCertificate=True"
+            providerName="System.Data.SqlClient" />
+    </connectionStrings>
+    <startup> 
+        <supportedRuntime version="v4.0" sku=".NETFramework,Version=v4.7.2" />
+    </startup>
+</configuration>
