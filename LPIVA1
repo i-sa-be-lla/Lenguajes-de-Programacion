@@ -1,0 +1,61 @@
+public class Persona {
+    
+    //Atributos
+private float peso;
+private float estatura;
+private float imc;
+
+//Propiedades
+    public float getPeso() {
+        return peso;
+    }
+
+    public void setPeso(float peso) {
+        this.peso = peso;
+    }
+
+    public float getEstatura() {
+        return estatura;
+    }
+
+    public void setEstatura(float estatura) {
+        this.estatura = estatura;
+    }
+
+    public float getImc() {
+        return imc;
+    }
+
+    public void setImc() {
+        this.imc = this.peso / (this.estatura*this.estatura);
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+
+ String peso = jtfPeso.getText ();
+        String estatura = jtfEstatura.getText ();
+        
+        float p = Float.parseFloat(peso);
+        float e = Float.parseFloat(estatura);
+        
+        Persona miPersona = new Persona ();
+        miPersona.setPeso(p);
+        miPersona.setEstatura(e);
+        miPersona.setImc();
+        
+        if(miPersona.getImc()<18.5){
+            JOptionPane.showMessageDialog(null, "BAJO PESO");
+        } else if(miPersona.getImc() >= 18.5 && miPersona.getImc() <= 24.9){
+           JOptionPane.showMessageDialog(null, "NORMAL");
+        } else if(miPersona.getImc() >= 25 && miPersona.getImc() <= 29.9){
+            JOptionPane.showMessageDialog(null, "SOBREPESO");   
+        } else if(miPersona.getImc() >= 30 && miPersona.getImc() <= 34.9){
+            JOptionPane.showMessageDialog(null, "OBESIDAD I");
+        } else if(miPersona.getImc() >= 35 && miPersona.getImc() <= 39.9){
+            JOptionPane.showMessageDialog(null, "OBESIDAD II");
+        } else {
+            JOptionPane.showMessageDialog(null, "OBESIDAD III");
+        }
+         
+    }                          
