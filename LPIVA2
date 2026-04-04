@@ -30,7 +30,7 @@ switch ($linea) {
 
 /////////////////////////////////////////////////////////////////////////////
 
-codigo en C++
+Codigo en C++
 #include <iostream>
 using namespace std;
 int main() {
@@ -99,9 +99,34 @@ int main() {
             break;
         default:
             printf("Opcion no valida\n");
-            
-        }
-} while (opcion !=4);
+//////////////////////////////////////////////////////////
+Codigo python
+saldo = 0
 
-return 0;
-}
+print("Menu")
+print("1. Deposito")
+print("2. Retiro")
+print("3. Saldo")
+print("4. Salir")
+
+opcion = int(input("Selecciona una opcion: "))
+
+if opcion == 1:
+    extra = float(input("Cuanto dinero desea Depositar: "))
+    saldo += extra
+
+elif opcion == 2:
+    retiro = float(input("Cuanto dinero desea Retirar: "))
+    if retiro <= saldo:
+        saldo -= retiro
+    else:
+        print("Fondos insuficientes")
+
+elif opcion == 3:
+    print("Su saldo es:", saldo)
+
+elif opcion == 4:
+    print("Salir")
+
+else:
+    print("Opcion invalida")
