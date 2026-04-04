@@ -1,1 +1,31 @@
+CODIGO PHP
+<?php
+// Equivalente al main() y ejecutarOpcion()
+echo "Menú Principal\n";
 
+echo "1. Depósito\n";
+echo "2. Retiro\n";
+echo "3. Saldo\n";
+echo "4. Salir\n";
+
+$linea = readline("Selecciona una opción: ");
+
+
+switch ($linea) {
+    case "1":
+        echo "Cuanto deseas depositar\n";
+        break;
+    case "2":
+        echo "Cuanto deseas retirar\n";
+        break;
+    case "3":
+        echo "El saldo disponible es:\n";
+        break;
+    case "4":
+        echo "Salir\n";
+        exit;
+      
+}
+?>
+
+/////////////////////////////////////////////////////////////////////////////
