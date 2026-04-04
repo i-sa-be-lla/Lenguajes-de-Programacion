@@ -1,4 +1,4 @@
-CODIGO PHP
+Codigo PHP
 <?php
 // Equivalente al main() y ejecutarOpcion()
 echo "Menú Principal\n";
@@ -29,3 +29,79 @@ switch ($linea) {
 ?>
 
 /////////////////////////////////////////////////////////////////////////////
+
+codigo en C++
+#include <iostream>
+using namespace std;
+int main() {
+    int opcion;
+    // usamos un bucle
+    do{
+        cout <<"\n Menu principal" << endl;
+        cout << "1.Deposito" << endl;
+        cout << "2.Retiro" << endl;
+        cout << "3.Saldo" << endl;
+        cout << "4.Salir" << endl;
+        cout << "Selecciona una opcion:\n" ;
+
+        cin >> opcion;
+        
+        system("cls");
+
+        switch (opcion) {
+            case 1:
+            cout <<"Cuanto desea depositar" << endl;
+            break;
+            case 2:
+            cout <<"Cuanto desea retirar" << endl;
+            break;
+            case 3:
+            cout << "El saldo disponible es:" << endl;
+            break;
+            defautl:
+            cout << "Opcion no valida " << endl;
+        }
+    } while (opcion !=4);
+    return 0;
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+Codigo en C
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    // Write C code here
+    int opcion;
+    do{
+        printf("Menu principal\n");
+        printf("1. Deposito\n");
+        printf("2. Retiro\n");
+        printf("3. Saldo\n");
+        printf("4. Salir\n");
+        printf("Selecciona una opcion:\n");
+        
+        scanf("%d", &opcion);
+        
+        switch (opcion){
+        
+        case 1:
+            printf("Cuanto desea depositar:\n");
+            break;
+        case 2:
+            printf("Cuanto desea retirar:\n");
+            break;
+        case 3:
+            printf("El saldo disponible es:\n");
+            break;
+        case 4:
+            printf("Salir\n");
+            break;
+        default:
+            printf("Opcion no valida\n");
+            
+        }
+} while (opcion !=4);
+
+return 0;
+}
